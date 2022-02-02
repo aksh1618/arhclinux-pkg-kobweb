@@ -35,8 +35,9 @@ if [[ $TEST_OUTPUT_FINAL == *$NEW_VER* ]]; then
 	read -p "Commit and push? [y/n] " && \
 		[[ $REPLY =~ ^[yY]$ ]] && \
 	git commit -vm "Upgrade to version $NEW_VER" && \
-	git push origin master
-	git push origin_github master
+	git push origin master && \
+	git push origin_github master && \
+	git push origin_varabyte master
 else
 	# print docker test output for inspection
 	echo "Test failed, printing full test output..." && \
@@ -48,4 +49,7 @@ fi
 echo "Cleaning up..." && \
 CLEANUP_OUTPUT=$($DOCKER_CMD image rm docker-makepkg) && \
 git checkout feature/upgrade-test-script && \
-git merge master
+git merge master && \
+git push origin_github feature/upgrade-test-script && \
+git push origin_varabyte feature/upgrade-test-script
+
