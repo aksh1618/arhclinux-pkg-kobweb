@@ -14,6 +14,9 @@ CURRENT_VER=$(grep 'pkgver=' PKGBUILD | awk -F= '{print $2}')
 NEW_VER=$1
 echo "Replacing $CURRENT_VER with $NEW_VER"
 sed -i "s/$CURRENT_VER/$NEW_VER/g" PKGBUILD || exit 1
+PKG_REL_LINE=$(grep 'pkgrel=' PKGBUILD)
+PKG_REL_LINE_REPLACEMENT='pkgrel=1'
+sed -i "s/$PKG_REL_LINE/$PKG_REL_LINE_REPLACEMENT/g" PKGBUILD || exit 1
 
 # update sha265sums
 echo "Updating sha265sums"
